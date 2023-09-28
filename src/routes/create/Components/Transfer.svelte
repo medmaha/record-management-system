@@ -12,15 +12,15 @@
 
 	async function retrieveData() {
 		try {
-			const response = await fetch(
-				'/create?models=manager-branch&fields=m_name-m_id-m_branchId-b_id-b_name',
-				{
-					credentials: 'include'
-				}
-			);
-			const data = await response.json();
-			managers = data[0];
-			branches = data[1];
+			const response2 = await fetch('/create?query=staffs', {
+				credentials: 'include'
+			});
+			managers= await response2.json();
+			const response1 = await fetch('/create?query=branches', {
+				credentials: 'include'
+			});
+			branches= await response1.json();
+
 			loadingData = false;
 		} catch (error: any) {
 			alert(error.message);
@@ -84,7 +84,7 @@
 			</label>
 		</div>
 		<div class="input-field flex items-center gap-2">
-			<label>
+			<label class="label">
 				<span>From Branch</span>
 				<input
 					disabled={true}

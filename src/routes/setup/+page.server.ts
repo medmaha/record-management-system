@@ -57,7 +57,7 @@ export const actions: Actions = {
 			name,
 			industry,
 			headquarters,
-			dateFounded: new Date(date_founded || '')
+			dateFounded: new Date(date_founded || undefined) || null
 		};
 
 		const existingApp = await DB.query.company.findFirst();

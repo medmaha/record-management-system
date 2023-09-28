@@ -18,6 +18,13 @@ export const GET: RequestHandler = async ({ request }) => {
 			headers: { 'content-type': 'application/json' }
 		});
 	}
+	if (url.get('query') === 'branches') {
+		const response = await DB.query.branch.findMany();
 
-	return new Response(JSON.stringify({}), { headers: { 'content-type': 'application/json' } });
+		return new Response(JSON.stringify(response), {
+			headers: { 'content-type': 'application/json' }
+		});
+	}
+
+	return new Response(JSON.stringify([]), { headers: { 'content-type': 'application/json' } });
 };
