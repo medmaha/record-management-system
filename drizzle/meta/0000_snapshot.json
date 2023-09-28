@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "8c576c75-7d89-46b6-8f70-81de13b2f63d",
+  "id": "60da6f4e-9198-45f8-a350-1b2de8939acc",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "users": {
@@ -109,6 +109,12 @@
         },
         "gender": {
           "name": "gender",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "telephone": {
+          "name": "telephone",
           "type": "text",
           "primaryKey": false,
           "notNull": false

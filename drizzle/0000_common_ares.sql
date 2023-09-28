@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS "staffs" (
 	"position" text,
 	"department" text,
 	"gender" text,
+	"telephone" text,
 	"branch_id" integer,
 	"address_id" integer,
 	"receipt_id" integer,

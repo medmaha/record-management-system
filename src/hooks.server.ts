@@ -38,7 +38,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 				sameSite: 'strict',
 				path: '/',
 				secure: process.env.NODE_ENV === 'production',
-				maxAge: 60000 * 5 // five minutes
+				maxAge: 5 * 60 // five minutes
 			});
 		} else {
 			clearAuthCookies(event);

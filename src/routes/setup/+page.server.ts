@@ -7,23 +7,19 @@ import { fail, redirect } from '@sveltejs/kit';
 export const load: PageServerLoad = async ({ locals, cookies }) => {
 	let stage: 'setup' | 'account' | undefined;
 
-	let account = locals.authUser as any;
-	let app = locals.company as any;
+	let account = await DB.query.user.findFirst();
+	let app = await DB.query.company.findFirst();
 
-	if (!app) {
-		app = await DB.query.company.findFirst();
+	if (!app) stage = 'setup';
 
-		if (!app) {
-			stage = 'setup';
-		} else {
-			cookies.set('app', JSON.stringify(app), {
-				httpOnly: true,
-				sameSite: 'strict',
-				path: '/',
-				secure: process.env.NODE_ENV === 'production',
-				maxAge: 60000 * 5 // five minutes
-			});
-		}
+	if (app) {
+		cookies.set('app', JSON.stringify(app), {
+			httpOnly: true,
+			sameSite: 'strict',
+			path: '/',
+			secure: process.env.NODE_ENV === 'production',
+			maxAge: 5 * 60 // five minutes
+		});
 	}
 
 	if (!stage) {
@@ -32,10 +28,9 @@ export const load: PageServerLoad = async ({ locals, cookies }) => {
 			account = JSON.parse(auth);
 		} catch (error) {
 			account = await DB.query.user.findFirst();
-		}
-		if (!account) {
 			stage = 'account';
-		} else {
+		}
+		if (account) {
 			cookies.set('booted', 'true', {
 				httpOnly: true,
 				sameSite: 'strict',
@@ -79,7 +74,7 @@ export const actions: Actions = {
 				sameSite: 'strict',
 				path: '/',
 				secure: process.env.NODE_ENV === 'production',
-				maxAge: 60000 * 5 // five minutes
+				maxAge: 5 * 60 // five minutes
 			});
 			return { message: 'Successfully registered your organization!' };
 		}
@@ -129,14 +124,14 @@ export const actions: Actions = {
 			sameSite: 'strict',
 			path: '/',
 			secure: process.env.NODE_ENV === 'production',
-			maxAge: 60000 * 30 // 30 minutes
+			maxAge: 30 * 60 // 30 minutes
 		});
 		cookies.set('usr', JSON.stringify(account.username), {
 			httpOnly: true,
 			sameSite: 'strict',
 			path: '/',
 			secure: process.env.NODE_ENV === 'production',
-			maxAge: 60000 * 60 * 24 // One Day
+			maxAge: 24 * 60 * 60 // One Day
 		});
 		return { message: 'Registration successful' };
 	}

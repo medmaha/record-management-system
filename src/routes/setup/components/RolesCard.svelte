@@ -8,7 +8,7 @@
 		HR: 'Human Resources role with read and write access to HR functions, including employee management and data access.'
 	} as any;
 
-	let selectedRole = 'Superuser';
+	let selectedRole = 'HR';
 </script>
 
 <div class="mb-4">
@@ -17,12 +17,12 @@
 		{#each roles as role (role)}
 			<div
 				class={`role ${role === selectedRole ? 'active' : ''} ${
-					role !== 'Staff' ? 'hover:outline-sky-500 cursor-pointer' : ''
+					role === 'HR' ? 'hover:outline-sky-500 cursor-pointer' : ''
 				} bg-white transition relative outline outline-1 outline-gray-200 rounded shadow-md w-max p-4 `}
 			>
-				<label class={role !== 'Staff' ? 'cursor-pointer' : 'cursor-not-allowed'}>
+				<label class={role === 'HR' ? 'cursor-pointer' : 'cursor-not-allowed'}>
 					<input
-						disabled={role === 'Staff'}
+						disabled={role !== 'HR'}
 						type="radio"
 						name="role"
 						value={role}
