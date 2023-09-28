@@ -14,32 +14,16 @@ const { Client } = pkg;
 
 import * as schema from './schema';
 
-const PORT = Number(PG_PORT);
+const client = new Client({
+	connectionString: PG_DATABASE_URL
+});
 
-let client: any | undefined;
-let DB: NodePgDatabase<typeof schema>;
+await client.connect();
+const DB = drizzle(client, { schema });
 
-try {
-	const _client = client || new Client(PG_DATABASE_URL);
-	// new Client({
-	// 	host: PG_HOST,
-	// 	port: PORT,
-	// 	user: PG_USER,
-	// 	password: PG_PASSWORD,
-	// 	database: PG_DATABASE
-	// });
-
-	// @ts-ignore
-	DB = DB || drizzle(_client, { schema });
-
-	if (!client) {
-		await _client.connect();
-		await migrate(DB, { migrationsFolder: './drizzle' });
-	}
-	client = _client;
-	console.log('Database System Booted 💨🚀');
-} catch {
-	throw new Error('[ERROR] Database connection failed');
+if (client) {
+	await migrate(DB, { migrationsFolder: './drizzle' });
+	console.log('Database Booted 🚀🚀🚀');
 }
 
 export default DB;
