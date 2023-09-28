@@ -127,7 +127,7 @@
 								<ul class="flex flex-col gap-2 w-[200px] font-medium">
 									<li class="inline-block w-full">
 										<a
-											href="/"
+											href="/users"
 											class="link inline-flex justify-between items-center rounded px-2 py-1 bg-sky-500 w-full bg-opacity-0 hover:bg-opacity-20"
 										>
 											<span>System Users</span>
@@ -147,7 +147,7 @@
 									</li>
 									<li class="inline-block w-full">
 										<a
-											href="/"
+											href="/settings"
 											class="link inline-flex justify-between items-center rounded px-2 py-1 bg-sky-500 w-full bg-opacity-0 hover:bg-opacity-20"
 										>
 											<span>Settings</span>
