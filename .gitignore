@@ -10,6 +10,6 @@ node_modules
 .todo.*
 .todo.*
 !.env.example
-.vite.config.js.*
-vite.config.js.timestamp-*
+
+vite.conffig.js.timestamp-*
 vite.config.ts.timestamp-*
