@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer components{
+
+	.form-wrapper:has(form){
+		@apply outline-1 outline-slate-600
+	}
+    .input{
+            @apply bg-transparent border-none rounded focus:border-none outline outline-1 outline-slate-300 focus:outline-2 focus:outline-sky-500
+    }
+
+    .btn{
+        @apply transition bg-opacity-90 focus:bg-opacity-100  hover:bg-opacity-100  bg-sky-500 focus:bg-sky-600 text-white font-semibold rounded-md
+    }
+
+	.form{
+		@apply outline outline-gray-200 outline-1
+	}
+
+	.form .input-field{
+		display: block;
+		width: 100%;
+		padding-bottom: 1rem;
+		
+	}
+   
+	.form .label {
+		display: flex;
+		flex-direction: column;
+        width: 100%;
+	}
+	.form .input {
+		padding: 0.5rem 1rem;
+        width:100%
+	}
+}
