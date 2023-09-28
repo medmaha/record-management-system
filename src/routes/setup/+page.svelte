@@ -42,7 +42,7 @@
 	</div>
 </div>
 
-<h1 class="text-3xl font-bold text-center uppercase tracking-wide">
+<h1 class="text-3xl font-bold text-center uppercase tracking-wide pt-6">
 	{data.app?.name || 'Initialization'}
 </h1>
 
