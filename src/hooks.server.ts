@@ -1,9 +1,9 @@
 import { redirect } from '@sveltejs/kit';
 import type { Handle } from '@sveltejs/kit';
 import { sql } from 'drizzle-orm';
+import { user } from '$db/schema';
 import DB from '$db';
 
-import { user } from '$db/schema';
 
 const error_response = `
 	<br> <br> <br>
