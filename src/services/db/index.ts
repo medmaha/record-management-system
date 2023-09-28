@@ -23,7 +23,7 @@ const boot = async () => {
 	});
 	const DB = drizzle(dbClient, { schema });
 
-	await migrate(DB, { migrationsFolder: './drizzle' });
+	// await migrate(DB, { migrationsFolder: './drizzle' });
 
 	return { DB, dbClient };
 };
