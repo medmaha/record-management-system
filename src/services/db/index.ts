@@ -14,8 +14,16 @@ const { Client } = pkg;
 
 import * as schema from './schema';
 
+// const client = new Client({
+// 	connectionString: PG_DATABASE_URL
+// });
+
 const client = new Client({
-	connectionString: PG_DATABASE_URL
+	host: PG_HOST,
+	user: PG_USER,
+	password: PG_PASSWORD,
+	database: PG_DATABASE,
+	port: Number(PG_PORT)
 });
 
 await client.connect();
