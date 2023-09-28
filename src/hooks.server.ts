@@ -4,7 +4,6 @@ import { sql } from 'drizzle-orm';
 import { user } from '$db/schema';
 import DB from '$db';
 
-
 const error_response = `
 	<br> <br> <br>
 	<p style="text-align:center;color:red">[Oops] something went wrong!</p>
@@ -79,6 +78,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 			if (account) {
 				auth = JSON.stringify(account);
+				event.cookies.set('usr', account.username, {
+					httpOnly: true,
+					sameSite: 'strict',
+					path: '/',
+					secure: process.env.NODE_ENV === 'production',
+					maxAge: 10 * 60 * 60 // One Day
+				});
 			}
 		}
 	}

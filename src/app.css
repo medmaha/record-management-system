@@ -27,14 +27,17 @@
 		padding-bottom: 1rem;
 		
 	}
-   
+	
 	.form .label {
 		display: flex;
 		flex-direction: column;
         width: 100%;
+		@apply font-semibold inline-block pb-2
+		
 	}
+	
 	.form .input {
 		padding: 0.5rem 1rem;
-        width:100%
+        width:100%;
 	}
 }

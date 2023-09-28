@@ -1,3 +1,9 @@
+import { drizzle } from 'drizzle-orm/postgres-js';
+import { migrate } from 'drizzle-orm/postgres-js/migrator';
+import postgres from 'postgres';
+
+import * as schema from './schema';
+
 import {
 	PG_DATABASE,
 	PG_HOST,
@@ -6,40 +12,25 @@ import {
 	PG_USER,
 	PG_DATABASE_URL
 } from '$env/static/private';
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
 
-import * as schema from './schema';
-
-const boot = () => {
-	const client = postgres({
+const boot = async () => {
+	const dbClient = postgres({
 		host: PG_HOST,
 		user: PG_USER,
 		password: PG_PASSWORD,
 		database: PG_DATABASE,
 		port: Number(PG_PORT)
 	});
-	const DB = drizzle(client, { schema });
+	const DB = drizzle(dbClient, { schema });
 
-	// await migrate(DB, { migrationsFolder: './drizzle' });
+	await migrate(DB, { migrationsFolder: './drizzle' });
 
-	console.log('Database Booted 🚀🚀🚀');
-
-	return DB;
+	return { DB, dbClient };
 };
 
-const DB = boot();
+const app = await boot();
+
+const DB = app.DB;
+console.log('Database Booted 🚀🚀🚀');
 
 export default DB;
-
-// const { Client } = pkg;
-// const client = new Client({
-// 	host: PG_HOST,
-// 	user: PG_USER,
-// 	password: PG_PASSWORD,
-// 	database: PG_DATABASE,
-// 	port: Number(PG_PORT)
-// });
-
-// await client.connect();
-// const DB = drizzle(client, { schema });

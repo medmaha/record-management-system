@@ -8,8 +8,9 @@ import type { PageServerLoad } from './$types';
 import { capitalize } from '../../lib/text';
 import { fail } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async () => {
-	return {};
+export const load: PageServerLoad = async ({ url }) => {
+	const model = url.searchParams.get('model');
+	return { model };
 };
 
 const insertRecord = async (table: any, data: any) => {

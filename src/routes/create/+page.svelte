@@ -5,15 +5,16 @@
 	import Branch from './Components/Branch.svelte';
 	import Staff from './Components/Staff.svelte';
 
-	import type { ActionData } from './$types';
+	import type { PageData, ActionData } from './$types';
 
 	import { capitalize } from '$lib/text';
 
 	export let form: ActionData;
+	export let data: PageData;
 
 	const models = ['staff', 'branch', 'transfer'];
 
-	let model = models[Math.floor(Math.random() * models.length)];
+	let model = data.model || models[Math.floor(Math.random() * models.length)];
 
 	function changeModel(ev: any) {
 		const payload = ev.currentTarget.value as typeof model;

@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { afterNavigate } from '$app/navigation';
-	import { onMount, onDestroy, afterUpdate } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import type { LayoutData } from '../$types';
 
 	import LogoutCard from './LogoutCard.svelte';
@@ -56,10 +55,13 @@
 			name: 'Staffs',
 			route: '/staffs'
 		},
-
 		{
 			name: 'Branches',
 			route: '/branches'
+		},
+		{
+			name: 'Promotions',
+			route: '/promotions'
 		},
 		{
 			name: 'Transfer Records',
@@ -70,7 +72,7 @@
 
 <LogoutCard open={logout} onClose={askLogout} />
 
-<aside class={`sticky top-0 h-[100dvh] border-r z-30 md:z-auto`}>
+<aside class={`sticky top-0 h-[100dvh] border-r z-30`}>
 	<div
 		class={`h-full ${
 			collapsed ? 'w-max' : 'absolute w-[260px] border-r'
@@ -120,7 +122,7 @@
 								id="moreLinks"
 								open={showMoreLinkDialog}
 								transition:scale
-								class="left-10 mt-2 z-20 origin-top w-max bg-white p-4 rounded-r-lg rounded-bl-lg focus:outline-none border border-gray-200 shadow"
+								class="left-10 mt-2 open:z-30 origin-top w-max bg-white p-4 rounded-r-lg rounded-bl-lg focus:outline-none border border-gray-200 shadow"
 							>
 								<ul class="flex flex-col gap-2 w-[200px] font-medium">
 									<li class="inline-block w-full">
@@ -240,9 +242,9 @@
 				</ul>
 			</nav>
 		{/if}
-		<div class="triangle absolute left-full top-[50%] translate-y-[-50%]" />
+		<div class="trianglek absolute left-full top-[50%] translate-y-[-50%]" />
 		<div
-			class="absolute left-full h-[50px] z-10 min-w-[10px] text-white top-[50%] translate-y-[-50%] translate-x-[-20%] flex items-center justify-center w-max"
+			class="absolute z-10 left-full h-[50px] min-w-[10px] text-white top-[50%] translate-y-[-50%] translate-x-[-20%] flex items-center justify-center w-max"
 		>
 			<button
 				on:click={() => (collapsed = !collapsed)}

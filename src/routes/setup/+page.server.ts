@@ -126,7 +126,7 @@ export const actions: Actions = {
 			secure: process.env.NODE_ENV === 'production',
 			maxAge: 30 * 60 // 30 minutes
 		});
-		cookies.set('usr', JSON.stringify(account.username), {
+		cookies.set('usr', account.username, {
 			httpOnly: true,
 			sameSite: 'strict',
 			path: '/',

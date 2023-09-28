@@ -34,10 +34,26 @@
 
 <Heading {model} user={data.user} {submitForm} hideModels={true} placeholder="Search branches..." />
 
-<div class="p-4">
-	<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-		{#each cached.get(current_snapshot) as branch}
-			<BranchCard {branch} />
-		{/each}
+{#if !cached.get(current_snapshot)?.length}
+	<div class="w-full h-[90dvh] flex items-center justify-center">
+		<div class="p-10 bg-black bg-opacity-20 text-center rounded-2xl">
+			<p class="text-center font-semibold pb-2 text-xl tracking-wide">Found no branch record</p>
+			{#if ['hr', 'superuser'].includes(data.user?.role?.toLowerCase())}
+				<a
+					href={`/create?model=branch`}
+					class="btn p-2 px-4 text-gray-800 text-sm font-bold inline-block mt-4"
+				>
+					+ Create branch
+				</a>
+			{/if}
+		</div>
 	</div>
-</div>
+{:else}
+	<div class="p-4">
+		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+			{#each cached.get(current_snapshot) as branch}
+				<BranchCard {branch} />
+			{/each}
+		</div>
+	</div>
+{/if}

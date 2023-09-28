@@ -47,7 +47,7 @@
 </h1>
 
 {#if !data.app}
-	<p class="text-sm max-w-[60ch] mx-auto font-semibold">
+	<p class="text-sm max-w-[60ch] mx-auto font-semibold text-center pt-1">
 		Prepare your organization or company by providing the fundamental data required for this system
 		to operate effectively.
 	</p>

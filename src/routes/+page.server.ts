@@ -3,7 +3,7 @@ import DB from '$db/index';
 import type { Actions } from './$types';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ url, locals }) => {
 	const staffs = await DB.query.staff.findMany({
 		with: {
 			address: true,
@@ -22,8 +22,9 @@ export const load: PageServerLoad = async ({ locals }) => {
 			address: true
 		}
 	});
+	const model = url.searchParams.get('model');
 
-	return { staffs, branches, user: locals.authUser };
+	return { model, staffs, branches, user: locals.authUser };
 };
 
 export const actions: Actions = {

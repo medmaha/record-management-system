@@ -7,7 +7,7 @@
 </script>
 
 <div class={`grid ${data.auth ? 'grid-cols-[auto,1fr] ' : ''} min-h-[100vh]`}>
-	{#if data.auth}
+	{#if data.auth && data.app}
 		<SideNav {data} />
 	{/if}
 
