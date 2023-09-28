@@ -9,7 +9,7 @@ import * as schema from './schema';
 
 const PORT = Number(PG_PORT);
 
-let client: typeof Client | undefined;
+let client: any | undefined;
 let DB: NodePgDatabase<typeof schema>;
 
 try {
