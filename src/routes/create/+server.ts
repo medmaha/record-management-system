@@ -7,14 +7,14 @@ export const GET: RequestHandler = async ({ request }) => {
 
 	if (url.get('query') === 'staffs') {
 		const response = await DB.query.staff.findMany();
-		return new Response(JSON.stringify(results), {
+		return new Response(JSON.stringify(response), {
 			headers: { 'content-type': 'application/json' }
 		});
 	}
 	if (url.get('query') === 'transfers') {
 		const response = await DB.query.transfer.findMany();
 
-		return new Response(JSON.stringify(results), {
+		return new Response(JSON.stringify(response), {
 			headers: { 'content-type': 'application/json' }
 		});
 	}
