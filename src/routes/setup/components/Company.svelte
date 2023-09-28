@@ -45,12 +45,12 @@
 		<div class="input-field">
 			<label for="data-founded" class="label">Date Founded</label>
 			<input
-				type="date"
+				type="text"
 				id="data-founded"
 				required
 				name="date-founded"
 				class="w-full input"
-				placeholder="When Was Your Company Founded"
+				placeholder="Date founded"
 			/>
 		</div>
 		<div class="input-field">
