@@ -12,12 +12,10 @@
 	const submitForm: SubmitFunction = ({ formElement }) => {
 		loading = true;
 		return async ({ result, update }) => {
-			if (result.type === 'success') formElement.reset();
-			setTimeout(() => {
-				form = null;
-			}, 3500);
-			await update({ reset: true });
-			loading = false;
+			if (result.type === 'success') {
+				formElement.reset();
+				window.location.reload();
+			}
 		};
 	};
 </script>
