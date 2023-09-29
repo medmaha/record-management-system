@@ -1,8 +1,11 @@
 <script lang="ts">
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { PageData, ActionData } from './$types';
+	import BranchesTable from '../components/TableViews/BranchesTable.svelte';
 	import BranchCard from '../components/BranchCard.svelte';
 	import Heading from '../components/Heading.svelte';
+	import ViewSwitcher from '../components/ViewSwitcher.svelte';
+	import { fade } from 'svelte/transition';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -30,11 +33,23 @@
 	};
 
 	if (form) console.log(form);
+
+	let view = 'grid' as 'grid' | 'table';
+
+	const toggleView = (_view: typeof view) => {
+		view = _view;
+	};
 </script>
 
 <Heading {model} user={data.user} {submitForm} hideModels={true} placeholder="Search branches..." />
 
-{#if !cached.get(current_snapshot)?.length}
+<ViewSwitcher {view} {toggleView} />
+
+{#if view === 'table'}
+	<div class="p-4 pt-0">
+		<BranchesTable branches={cached.get(current_snapshot)} />
+	</div>
+{:else if !cached.get(current_snapshot)?.length}
 	<div class="w-full h-[90dvh] flex items-center justify-center">
 		<div class="p-10 bg-black bg-opacity-20 text-center rounded-2xl">
 			<p class="text-center font-semibold pb-2 text-xl tracking-wide">Found no branch record</p>
@@ -49,10 +64,12 @@
 		</div>
 	</div>
 {:else}
-	<div class="p-4">
+	<div class="p-4 pt-0">
 		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
 			{#each cached.get(current_snapshot) as branch}
-				<BranchCard {branch} />
+				<div class="" in:fade>
+					<BranchCard {branch} />
+				</div>
 			{/each}
 		</div>
 	</div>
