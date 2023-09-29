@@ -73,6 +73,7 @@
 <LogoutCard open={logout} onClose={askLogout} />
 
 <aside class={`sticky top-0 h-[100dvh] border-r z-30`}>
+<div class="relative block w-max">
 	<div
 		class={`h-full ${
 			collapsed ? 'w-max' : 'absolute w-[260px] border-r'
@@ -262,6 +263,7 @@
 			</button>
 		</div>
 	</div>
+</div>
 </aside>
 
 <style>
