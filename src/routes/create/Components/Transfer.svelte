@@ -13,13 +13,22 @@
 	async function retrieveData() {
 		try {
 			const response2 = await fetch('/create?query=staffs', {
-				credentials: 'include'
+				credentials: 'include',
+				cache: 'force-cache',
+				headers: {
+					'Cache-Control': 'max-age=300'
+				}
 			});
-			managers= await response2.json();
 			const response1 = await fetch('/create?query=branches', {
-				credentials: 'include'
+				credentials: 'include',
+				cache: 'force-cache',
+				headers: {
+					'Cache-Control': 'max-age=300'
+				}
 			});
-			branches= await response1.json();
+
+			managers = await response2.json();
+			branches = await response1.json();
 
 			loadingData = false;
 		} catch (error: any) {
@@ -57,7 +66,7 @@
 						disabled={loading}
 						class="input disabled:opacity-60 py-2"
 						id="manager_id"
-						name="manager-id"
+						name="staff-id"
 						on:change={handleManagerChange}
 					>
 						<option value="------">------</option>

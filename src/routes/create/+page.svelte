@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { scale } from 'svelte/transition';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { scale } from 'svelte/transition';
 	import Transfer from './Components/Transfer.svelte';
 	import Branch from './Components/Branch.svelte';
 	import Staff from './Components/Staff.svelte';
@@ -14,7 +14,7 @@
 
 	const models = ['staff', 'branch', 'transfer'];
 
-	let model = data.model || models[Math.floor(Math.random() * models.length)];
+	let model = data?.model || models[Math.floor(Math.random() * models.length)];
 
 	function changeModel(ev: any) {
 		const payload = ev.currentTarget.value as typeof model;

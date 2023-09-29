@@ -5,26 +5,20 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async ({ request }) => {
 	const url = new URL(request.url).searchParams;
 
+	let results: any[] | undefined;
+
 	if (url.get('query') === 'staffs') {
-		const response = await DB.query.staff.findMany();
-		return new Response(JSON.stringify(response), {
-			headers: { 'content-type': 'application/json' }
-		});
+		results = await DB.query.staff.findMany();
+	} else if (url.get('query') === 'transfers') {
+		results = await DB.query.transfer.findMany();
+	} else if (url.get('query') === 'branches') {
+		results = await DB.query.branch.findMany();
 	}
-	if (url.get('query') === 'transfers') {
-		const response = await DB.query.transfer.findMany();
-
-		return new Response(JSON.stringify(response), {
-			headers: { 'content-type': 'application/json' }
-		});
-	}
-	if (url.get('query') === 'branches') {
-		const response = await DB.query.branch.findMany();
-
-		return new Response(JSON.stringify(response), {
-			headers: { 'content-type': 'application/json' }
-		});
-	}
-
-	return new Response(JSON.stringify([]), { headers: { 'content-type': 'application/json' } });
+	return new Response(JSON.stringify(results || []), {
+		headers: {
+			'content-type': 'application/json',
+			'Cache-Control': 'max-age=300',
+			cache: 'force-cache'
+		}
+	});
 };

@@ -30,7 +30,7 @@ export const branchRelations = relations(branch, ({ one }) => ({
 		references: [address.id]
 	}),
 	manager: one(staff, {
-		fields: [branch.managerId],
+		fields: [branch.staffId],
 		references: [staff.id]
 	})
 }));

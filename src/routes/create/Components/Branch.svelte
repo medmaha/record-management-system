@@ -11,11 +11,14 @@
 
 	async function retrieveData() {
 		try {
-			const response = await fetch('/create?models=manager&fields=m_name-m_id', {
-				credentials: 'include'
+			const response = await fetch('/create?query=staffs', {
+				credentials: 'include',
+				cache: 'force-cache',
+				headers: {
+					'Cache-Control': 'max-age=300'
+				}
 			});
-			const data = await response.json();
-			managers = data[0];
+			managers = await response.json();
 			loadingData = false;
 		} catch (error) {}
 	}
@@ -46,7 +49,7 @@
 					</select>
 				{:else}
 					<div class="input inline-flex items-center justify-between px-2 opacity-70">
-						<span class="py-2 animate-pulse duration-300">Loading ...</span>
+						<span class="py-1 animate-pulse duration-300">Loading ...</span>
 						<span class="py-1">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"

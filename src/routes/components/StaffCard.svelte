@@ -5,13 +5,13 @@
 </script>
 
 <a
-	href={`/companies/${staff.id}`}
+	href={`/staffs/${staff.id}`}
 	class="block relative overflow-hidden hover:scale-[1.01] card cursor-pointer shadow outline outline-2 hover:shadow-md hover:outline-2 hover:outline-sky-100 transition p-4 bg-white rounded-md outline-gray-100"
 >
 	<div in:fade class="absolute left-0 -top-1 w-full h-1.5 block bg-sky-300" />
 
 	<div class="flex justify-center gap-3">
-		<div class="flex-1 flex items-center gap-3">
+		<div class="flex-1 flex gap-3">
 			<div class="w-max">
 				<img
 					src={`/manager-default.jpg`}

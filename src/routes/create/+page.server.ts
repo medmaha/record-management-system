@@ -5,7 +5,6 @@ import { address, branch, company, staff, transfer, receipt } from '$db/schema';
 
 import type { Actions } from './$types';
 import type { PageServerLoad } from './$types';
-import { capitalize } from '../../lib/text';
 import { fail } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ url }) => {
@@ -40,11 +39,6 @@ export const actions: Actions = {
 		type NewStaff = typeof staff.$inferInsert;
 		type NewReceipt = typeof receipt.$inferInsert;
 
-		const newReceipt: NewReceipt = {
-			usedFor: '[STAFF-CREATION] name=' + name,
-			createdByUserId: Number(authUser.id)
-		};
-
 		const staffAddress = await getAddress(addressName, addressRegion);
 
 		const newStaff: NewStaff = {
@@ -69,6 +63,11 @@ export const actions: Actions = {
 			};
 		}
 
+		const newReceipt: NewReceipt = {
+			usedFor: '[STAFF-CREATION] name=' + name,
+			createdByUserId: Number(authUser.id)
+		};
+
 		const _receipt = (await insertRecord(receipt, newReceipt))[0];
 		newStaff.receiptId = _receipt.id;
 
@@ -81,11 +80,12 @@ export const actions: Actions = {
 		}
 	},
 
-	createBranch: async ({ request }) => {
+	createBranch: async ({ request, locals }) => {
+		const authUser = locals.authUser;
 		const formData = await request.formData();
 
 		const name = formData.get('name')! as string;
-		const managerID = formData.get('manager-id')! as string;
+		const staffId = formData.get('manager-id')! as string;
 
 		const addressName = formData.get('address')! as string;
 		const addressRegion = formData.get('region')! as string;
@@ -94,7 +94,7 @@ export const actions: Actions = {
 		const branchManager = (
 			await DB.select()
 				.from(staff)
-				.where(sql`id=${managerID}`)
+				.where(sql`id=${staffId}`)
 		)[0];
 
 		if (!branchManager) return { error: true, message: 'Invalid manager selected for this branch' };
@@ -102,7 +102,7 @@ export const actions: Actions = {
 		const newBranch: NewBranch = {
 			name,
 			telephone,
-			managerId: branchManager.id,
+			staffId: branchManager.id,
 			addressId: (await getAddress(addressName, addressRegion)).id
 		};
 
@@ -110,21 +110,30 @@ export const actions: Actions = {
 			await DB.select()
 				.from(branch)
 				.where(
-					sql`name=${name} and address_id=${newBranch.addressId} and manager_id=${newBranch.managerId}`
+					sql`name=${name} and address_id=${newBranch.addressId} and staff_id=${newBranch.staffId}`
 				)
 		)[0];
 
 		if (existingBranch) {
 			return fail(400, { error: true, message: 'This branch already exist' });
 		}
+
+		const newReceipt: any = {
+			usedFor: '[BRANCH-CREATION] name=' + name,
+			createdByUserId: Number(authUser.id)
+		};
+
+		const _receipt = (await insertRecord(receipt, newReceipt))[0];
+		newBranch.receiptId = _receipt.id;
+
 		const n_b = await insertRecord(branch, newBranch);
 
 		await DB.update(staff)
 			.set({ branchId: n_b[0].id })
-			.where(sql`id=${managerID}`);
+			.where(sql`id=${staffId}`);
 		await DB.update(branch)
-			.set({ managerId: null })
-			.where(sql`manager_id=${managerID} AND NOT id=${n_b[0].id}`);
+			.set({ staffId: null })
+			.where(sql`staff_id=${staffId} AND NOT id=${n_b[0].id}`);
 
 		return { success: true, message: 'Successfully inserted branch data' };
 	},
@@ -132,11 +141,11 @@ export const actions: Actions = {
 	createTransfer: async ({ request }) => {
 		const formData = await request.formData();
 
-		const fm_b = formData.get('from-branch-id') as any;
+		const fb_i = formData.get('from-branch-id') as any;
 
-		const managerID = (formData.get('manager-id')! as string) || '0';
+		const staffID = (formData.get('staff-id')! as string) || '0';
 		const toBranchID = (formData.get('to-branch-id')! as string) || '0';
-		const fromBranchID = fm_b && !isNaN(Number(fm_b)) ? Number(fm_b) : null;
+		const fromBranchID = fb_i && !isNaN(Number(fb_i)) ? Number(fb_i) : null;
 
 		const remarks = (formData.get('remarks')! as string) || '';
 
@@ -154,24 +163,24 @@ export const actions: Actions = {
 		if (!transferToBranch.length)
 			return { success: false, error: true, message: '[Error] form contains error' };
 
-		const transferManager = await DB.select()
+		const transferStaff = await DB.select()
 			.from(staff)
-			.where(sql`id=${managerID}`);
+			.where(sql`id=${staffID}`);
 
-		if (!transferManager.length)
-			return { success: false, error: true, message: 'Invalid manager selected for this transfer' };
+		if (!transferStaff.length)
+			return { success: false, error: true, message: 'Invalid staff selected for this transfer' };
 
-		// const newTransfer: NewTransfer = {
-		// 	toBranchId: Number(toBranchID),
-		// 	fromBranchId: fromBranchID,
-		// 	managerId: Number(managerID),
-		// 	transfer_remarks: remarks
-		// };
+		const newTransfer: NewTransfer = {
+			toBranchId: Number(toBranchID),
+			fromBranchId: fromBranchID,
+			staffId: Number(staffID),
+			transfer_remarks: remarks
+		};
 
-		// await insertRecord(transfer, newTransfer);
-		// await DB.update(staff)
-		// 	.set({ branchId: Number(toBranchID) })
-		// 	.where(sql`id=${managerID}`);
+		await insertRecord(transfer, newTransfer);
+		await DB.update(staff)
+			.set({ branchId: Number(toBranchID) })
+			.where(sql`id=${staffID}`);
 
 		return { success: true, error: false, message: 'Successfully inserted transfer data' };
 	}
