@@ -5,7 +5,15 @@ import { redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const { id } = params;
-	const staff = await DB.query.staff.findFirst({ where: sql`id=${id}` });
+	const staff = await DB.query.staff.findFirst({
+		where: sql`id=${id}`,
+		with: {
+			address: true,
+			branch: {
+				with: { address: true }
+			}
+		}
+	});
 
 	if (!staff) throw redirect(303, '/404');
 

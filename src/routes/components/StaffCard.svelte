@@ -25,7 +25,7 @@
 				<p class="text-sm font-semibold leading-none">{staff.name}</p>
 				<p class="text-xs inline-flex items-center gap-1">
 					<span>{staff.position}</span>
-					{#if staff.department}
+					{#if staff.department && staff.department != 'N/A'}
 						<span class="uppercase font-light">-</span>
 						<span class="inline-block font-light flex-1 truncate">{staff.department}</span>
 					{/if}
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div class="">
+		<div class="">
 			<p class="text-xs font-semibold inline-flex items-center gap-0.5 truncate">
 				<span class="text-sky-200">
 					<svg
@@ -53,10 +53,10 @@
 					>
 				</span>
 				<span class="truncate">
-					{manager.branch?.name}
+					{staff.branch?.name}
 				</span>
 			</p>
-		</div> -->
+		</div>
 	</div>
 	<div class="flex items-center justify-between gap-3 mt-2 pt-2">
 		<div class="">
@@ -73,7 +73,7 @@
 						/></svg
 					>
 				</span>
-				{staff.address?.name || 'N/A'}
+				{staff.address?.name  || staff.branch?.address?.name || 'N/A'}
 			</p>
 		</div>
 		<div class="w-max flex items-center gap-1">

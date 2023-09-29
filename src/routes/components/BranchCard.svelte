@@ -61,7 +61,7 @@
 						/></svg
 					>
 				</span>
-				{branch.address.name || 'N/A'}
+				{branch.address?.name || 'N/A'}
 			</p>
 		</div>
 		<div class="w-max inline-flex items-center gap-1">
