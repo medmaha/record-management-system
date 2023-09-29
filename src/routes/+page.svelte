@@ -36,7 +36,7 @@
 
 <Heading {model} user={data.user} {submitForm} {updateModel} />
 
-{#if !cached.get(model)?.length || (model === 'staff' && (cached.get(model)?.length || 0) < 2)}
+{#if cached.get(model).length < 2 || (model === 'staff' && String(cached.get(model)[0].id) === String(data.auth.id))}
 	<div class="w-full h-[90dvh] flex items-center justify-center -z-20">
 		<div class="p-10 bg-black bg-opacity-20 text-center rounded-2xl">
 			<p class="text-center font-semibold pb-2 text-xl tracking-wide">
