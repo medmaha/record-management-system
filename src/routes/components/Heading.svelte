@@ -99,7 +99,7 @@
 
 		<div class="inline-flex items-center gap-4 xl:gap-6 xl:flex-1 justify-end">
 			{#if !hideProfile}
-				<div class="w-max inline-flex items-center gap-1">
+				<a href={`/account/${user.username}`} class="w-max inline-flex items-center gap-1">
 					<img
 						src="manager-default.jpg"
 						alt="managers avatar"
@@ -115,7 +115,7 @@
 					<!-- <p class="font-semibold capitalize text-sm truncate sm:hidden inline-block w-full">
 						{user.name?.split(' ')[2] || user.name?.split(' ')[1]}
 					</p> -->
-				</div>
+				</a>
 			{/if}
 			{#if !hideLogout}
 				<div class="md:pl-4">

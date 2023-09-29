@@ -7,6 +7,7 @@ declare global {
 			authUser: {
 				id: number;
 				name: string;
+				username: string;
 				role: 'Read' | 'Staff' | 'Superuser' | 'Manager';
 			};
 			company: {
