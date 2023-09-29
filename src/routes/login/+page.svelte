@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { redirect, type SubmitFunction } from '@sveltejs/kit';
-	import type { ActionData } from './$types';
+	import type { ActionData, PageData } from './$types';
+	import Heading from '../components/Heading.svelte';
 
 	export let loading = false;
 	export let form: ActionData;
+	export let data: PageData;
 
 	const submitForm: SubmitFunction = ({ formElement }) => {
 		loading = true;
@@ -20,7 +22,15 @@
 	};
 </script>
 
-<div class="relative">
+<Heading
+	showHeading={data.app?.name}
+	showLogin={true}
+	hideForm={true}
+	hideProfile={true}
+	hideLogout={true}
+/>
+
+<div class="relative pt-6">
 	<div class="absolute top-0 left-0 w-full">
 		{#if form?.error}
 			<p

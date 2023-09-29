@@ -13,6 +13,8 @@
 	export let hideProfile = false;
 	export let hideLogout = false;
 	export let hideModels = false;
+	export let showLogin = false;
+	export let showHeading = '';
 
 	const models = ['staff', 'branch', 'transfer'];
 
@@ -38,6 +40,9 @@
 	<div
 		class="px-4 py-3 bg-white flex items-center justify-between border-b sticky w-full top-0 gap-4"
 	>
+		{#if showHeading}
+			<h1 class="text-lg font-bold text-center px-4">{showHeading || 'SRM System'}</h1>
+		{/if}
 		{#if !hideForm}
 			<div class="inline-flex items-center gap-4 w-full">
 				<form
@@ -120,6 +125,18 @@
 							on:click={askLogout}
 							class="transition inline-block font-semibold active rounded px-3 py-1 bg-red-500 w-full bg-opacity-70 text-white hover:bg-opacity-90"
 							>Logout</button
+						>
+					</form>
+				</div>
+			{/if}
+			{#if showLogin}
+				<div class="md:pl-4">
+					<form on:submit|preventDefault={() => {}}>
+						<button
+							formaction="/login"
+							on:click={askLogout}
+							class="transition inline-block font-semibold active rounded px-3 py-1 bg-sky-500 w-full bg-opacity-60 text-white hover:bg-opacity-80"
+							>Login</button
 						>
 					</form>
 				</div>

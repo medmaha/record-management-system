@@ -1,9 +1,15 @@
 import { redirect, fail } from '@sveltejs/kit';
 import { sql } from 'drizzle-orm';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
 import DB from '$db';
 import { user } from '$db/schema';
+
+export const load: PageServerLoad = async ({ locals }) => {
+	const app = locals.company;
+
+	return { app };
+};
 
 export const actions: Actions = {
 	default: async ({ cookies, request }) => {
