@@ -131,14 +131,11 @@
 			{/if}
 			{#if showLogin}
 				<div class="md:pl-4">
-					<form on:submit|preventDefault={() => {}}>
-						<button
-							formaction="/login"
-							on:click={askLogout}
-							class="transition inline-block font-semibold active rounded px-3 py-1 bg-sky-500 w-full bg-opacity-60 text-white hover:bg-opacity-80"
-							>Login</button
-						>
-					</form>
+					<a
+						href="/login"
+						class="transition inline-block font-semibold active rounded px-3 py-1 bg-sky-500 w-full bg-opacity-60 text-white hover:bg-opacity-80"
+						>Login</a
+					>
 				</div>
 			{/if}
 		</div>

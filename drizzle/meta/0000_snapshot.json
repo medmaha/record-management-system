@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "f5973389-ad7c-4605-9799-101e5df40198",
+  "id": "5d257714-2fc4-41e1-bea1-7386e1ee833e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "users": {
@@ -329,8 +329,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "manager_id": {
-          "name": "manager_id",
+        "staff_id": {
+          "name": "staff_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": false

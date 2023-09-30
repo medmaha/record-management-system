@@ -14,16 +14,17 @@ import {
 } from '$env/static/private';
 
 const boot = async () => {
-	const dbClient = postgres({
-		host: PG_HOST,
-		user: PG_USER,
-		password: PG_PASSWORD,
-		database: PG_DATABASE,
-		port: Number(PG_PORT)
-	});
+	const dbClient = postgres(PG_DATABASE_URL);
+	// const dbClient = postgres({
+	// 	host: PG_HOST,
+	// 	user: PG_USER,
+	// 	password: PG_PASSWORD,
+	// 	database: PG_DATABASE,
+	// 	port: Number(PG_PORT)
+	// });
 	const DB = drizzle(dbClient, { schema });
 
-	// await migrate(DB, { migrationsFolder: './drizzle' });
+	await migrate(DB, { migrationsFolder: './drizzle' });
 
 	return { DB, dbClient };
 };

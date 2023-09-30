@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS "transfers" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"from_branch_id" integer,
 	"to_branch_id" integer,
-	"manager_id" integer,
+	"staff_id" integer,
 	"receipt_id" integer,
 	"transfer_remarks" text DEFAULT '',
 	"transfer_date" timestamp with time zone DEFAULT now()

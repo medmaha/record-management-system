@@ -23,6 +23,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	if (event.url.pathname.match(/\/setup/gi)) {
 		const response = await resolve(event);
+
 		return response;
 	}
 
@@ -41,9 +42,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 			});
 		} else {
 			clearAuthCookies(event);
-			return new Response(error_response, {
-				headers: { 'Content-Type': 'text/html' }
-			});
+			throw redirect(303, '/setup');
+			// return new Response(error_response, {
+			// 	headers: { 'Content-Type': 'text/html' }
+			// });
 		}
 	} else {
 		try {
@@ -107,7 +109,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	const authUser = event.locals.authUser;
-	const protected_routes = ['/create', '/register'];
+	const protected_routes = ['/create', '/register', '/users'];
 
 	for (const route of protected_routes) {
 		if (event.url.pathname.match(new RegExp(route, 'ig'))) {
@@ -115,7 +117,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 				const error_response = `
 					<br> <br> <br>
 					<p style="text-align:center;color:red">[Oops] something went wrong!</p>
-					<h1 style="text-align:center;color:#444"> You dont't have permission to this page</h1>
+					<h1 style="text-align:center;color:#444"> You don't have permission to this page</h1>
 					<div style="text-align:center;color:skyBlue;margin-top:1rem">
 						<a href="/" style="text-align:center;color:blue;"> Go back Instead</h>
 					</div>
